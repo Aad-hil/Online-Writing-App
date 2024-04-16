@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Writing App</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3">
+      <h1 class="text-center mb-4">Online Writing App</h1>
+      <!-- Text input form -->
+      <form id="textInputForm">
+        <div class="form-group">
+          <textarea class="form-control" id="textInput" rows="8" placeholder="Start typing..."></textarea>
+        </div>
+      </form>
+      <!-- Text display area -->
+      <div class="form-group mt-4">
+        <label for="textDisplay">Your Text:</label>
+        <div id="textDisplay" class="border p-3" style="min-height: 200px; overflow-y: auto;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS and dependencies (optional for this UI) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Script for real-time updates -->
+<script>
+  var typingTimer;
+  var doneTypingInterval = 2000;  // 3 seconds
+
+  // Function to update text display area
+  function updateTextDisplay() {
+    var textInput = $('#textInput').val();
+    $('#textDisplay').text(textInput);
+  }
+
+  // Function to clear text input and text display areas
+  function clearInputAndDisplay() {
+    $('#textInput').val('');
+    $('#textDisplay').text('');
+  }
+
+  // Event listener for text input
+  $('#textInput').on('input', function() {
+    clearTimeout(typingTimer);
+    updateTextDisplay();
+    typingTimer = setTimeout(clearInputAndDisplay, doneTypingInterval);
+  });
+
+  // Function to clear input fields after 3 seconds of no input
+  function checkInputAndClear() {
+    var textInput = $('#textInput').val();
+    if (!textInput.trim()) {
+      clearInputAndDisplay();
+    }
+  }
+
+  // Check input fields every second and clear if no input after 3 seconds
+  setInterval(checkInputAndClear, 1000);
+</script>
+
+</body>
+</html>
